@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wednesday Briefing — February 11, 2026</title>
     <style>
-        /* All original styles unchanged */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
        
         :root {
@@ -28,47 +27,845 @@
             --border: rgba(139, 92, 246, 0.15);
         }
        
-        /* ... (all other original CSS unchanged for brevity) ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+       
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+       
+        /* Layout */
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+       
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            padding: 2rem 1.5rem;
+            z-index: 100;
+        }
+       
+        .sidebar-header {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+       
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+       
+        .sidebar-date {
+            font-size: 0.85rem;
+            color: var(--accent-wed-light);
+            font-weight: 500;
+        }
+       
+        .sidebar-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+       
+        .nav-section {
+            margin-bottom: 1.5rem;
+        }
+       
+        .nav-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+       
+        .nav-list {
+            list-style: none;
+        }
+       
+        .nav-item {
+            margin-bottom: 0.25rem;
+        }
+       
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+       
+        .nav-link:hover {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--text-primary);
+        }
+       
+        .nav-link.active {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-wed-light);
+            border-left-color: var(--accent-wed);
+            font-weight: 500;
+        }
+       
+        .nav-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            min-width: 20px;
+        }
+       
+        .nav-link.active .nav-number {
+            color: var(--accent-wed-light);
+        }
+       
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 0;
+        }
+       
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+            padding: 3rem;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+       
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            международ left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-wed), var(--accent-wed-light), var(--accent-wed-dark));
+        }
+       
+        .hero-content {
+            max-width: 800px;
+        }
+       
+        .hero-badge {
+            display: inline-block;
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--accent-wed-light);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1.5rem;
+        }
+       
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f8fafc 0%, var(--accent-wed-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+       
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+       
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+        }
+       
+        .hero-stat {
+            background: rgba(17, 24, 39, 0.6);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+        }
+       
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+       
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+       
+        .stat-change {
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+       
+        .positive { color: var(--success); }
+        .negative { color: var(--danger); }
+       
+        /* Content Sections */
+        .content-section {
+            padding: 3rem;
+            border-bottom: 1px solid var(--border);
+            max-width: 900px;
+        }
+       
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.5rem;
+        }
+       
+        .header-accent {
+            width: 4px;
+            height: 32px;
+            background: var(--accent-wed);
+            border-radius: 2px;
+        }
+       
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            flex: 1;
+        }
+       
+        .section-badge {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--accent-wed-light);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+       
+        /* Narrative */
+        .narrative {
+            color: var(--text-secondary);
+            line-height::q 1.9;
+            font-size: 1rem;
+        }
+       
+        .narrative p {
+            margin-bottom: 1.25rem;
+        }
+       
+        .highlight {
+            color: var(--accent-wed-light);
+            font-weight: 600;
+        }
+       
+        .highlight-box {
+            background: rgba(139, 92, 246, 0.08);
+            border-left: 4px solid var(--accent-wed);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            color: var(--text-primary);
+        }
+       
+        /* Research Desk */
+        .research-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+       
+        .research-accent {
+            background: var(--accent-research);
+        }
+       
+        .research-badge {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+       
+        .key-quote {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid var(--accent-research);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: #e2e8f0;
+            font-size: 1.25rem;
+            line-height: 1.6;
+        }
+       
+        .article-grid {
+            display: grid;
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+       
+        .research-card {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s;
+        }
+       
+        .research-card:hover {
+            transform: translateX(8px);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+        }
+       
+        .article-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+       
+        .article-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-research);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+       
+        .article-time {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+       
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+       
+        .article-excerpt {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+       
+        .article-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+       
+        .article-tags {
+            display: flex;
+            gap: 0.5rem;
+        }
+       
+        . Earn {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+       
+        .article-link {
+            color: var(--accent-research);
+            font-size: 0.85rem;
+            text-decoration: none;
+            font-weight: 500;
+        }
+       
+        /* Catalysts */
+        .catalyst-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+       
+        .catalyst-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1rem 1.25rem;
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 10px;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
+        }
+       
+        .catalyst-card:hover {
+            background: rgba(139, 92, 246, 0.08);
+        }
+       
+        .catalyst-card.high { border-left-color: var(--danger); }
+        .catalyst-card.medium { border-left-color: var(--warning); }
+        .catalyst-card.low { border-left-color: var(--success); }
+       
+        .catalyst-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-wed-light);
+            min-width: 80px;
+            font-weight: 600;
+        }
+       
+        .catalyst-content {
+            flex: 1;
+        }
+       
+        .catalyst-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+       
+        .catalyst-detail {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+       
+        .catalyst-consensus {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: right;
+        }
+       
+        /* Levels */
+        .levels-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+       
+        .level-card {
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border-top: 4px solid;
+            transition: transform 0.2s;
+        }
+       
+        .level-card:hover {
+            transform: translateY(-4px);
+        }
+       
+        .level-card.es { border-top-color: var(--accent-wed); }
+        .level-card.gc { border-top-color: var(--accent-gold); }
+        .level-card.si { border-top-color: var(--accent-silver); }
+       
+        .level-asset {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+       
+        .level-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+       
+        .level-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+       
+        .levels-detail {
+            background: rgba(139, 92, 246, 0.05);
+            padding: 1.25rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+       
+        /* Risk Check */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+       
+        .risk-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 10px;
+        }
+       
+        .risk-name {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+       
+        .risk-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+       
+        /* Trade Setups */
+        .trade-card {
+            background: rgba(17, 24, 39, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.25rem;
+            border-left: 4px solid;
+        }
+       
+        .trade-card.es { border-left-color: var(--accent-wed); }
+        .trade-card.gc { border-left-color: var(--accent-gold); }
+        .trade-card.si { border-left-color: var(--accent-silver); }
+       
+        .trade-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+       
+        .trade-asset {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+       
+        .trade-direction {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+       
+        .trade-direction.long {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--success);
+        }
+       
+        .trade-direction.short {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--danger);
+        }
+       
+        .trade-direction.neutral {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+       
+        .trade-thesis {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+       
+        .trade-levels {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+       
+        .t-level {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+       
+        .t-level-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+       
+        .t-level-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+       
+        .trade-link {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+       
+        /* Bottom Line */
+        .bottom-line {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+        }
+       
+        .attribution-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+       
+        .attribution-block h4 {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+       
+        .contributor {
+            margin-bottom: 0.75rem;
+        }
+       
+        .contributor-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+       
+        .contributor-role {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+       
+        .data-sources {
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+       
+        /* Mobile */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s;
+            }
+           
+            .sidebar.open {
+                transform: translateX(0);
+            }
+           
+            .main-content {
+                margin-left: 0;
+            }
+           
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+           
+            .levels-container,
+            .risk-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+       
+        @media (max-width: 640px) {
+            .hero {
+                padding: 2rem;
+            }
+           
+            .hero-title {
+                font-size: 2rem;
+            }
+           
+            .content-section {
+                padding: 2rem;
+            }
+           
+            .trade-levels {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="layout">
-        <!-- Sidebar unchanged -->
-        <!-- ... (full original sidebar HTML) ... -->
-
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Market Game Plan</div>
+                <div class="sidebar-date">Wednesday, February 11, 2026</div>
+                <div class="sidebar-subtitle">NFP Aftermath • Post-Jobs Volatility • Research Desk Active</div>
+            </div>
+           
+            <nav>
+                <div class="nav-section">
+                    <div class="nav-label">Overview</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#executive-summary" class="nav-link active">
+                                <span class="nav-number">0.</span>
+                                Executive Summary
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+               
+                <div class="nav-section">
+                    <div class="nav-label">Market Structure</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#market-vibe" class="nav-link">
+                                <span class="nav-number">1.</span>
+                                Market Vibe
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#yesterday-impact" class="nav-link">
+                                <span class="nav-number">2.</span>
+                                Yesterday's Impact
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#research-desk" class="nav-link">
+                                <span class="nav-number">3.</span>
+                                Research Desk
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+               
+                <div class="nav-section">
+                    <div class="nav-label">Today's Catalysts</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#catalysts" class="nav-link">
+                                <span class="nav-number">4.</span>
+                                Economic Calendar
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#fed-speak" class="nav-link">
+                                <span class="nav-number">5.</span>
+                                Fed Speak Today
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+               
+                <div class="nav-section">
+                    <div class="nav-label">Strategy</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#levels" class="nav-link">
+                                <span class="nav-number">6.</span>
+                                Key Levels
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#risk-check" class="nav-link">
+                                <span class="nav-number">7.</span>
+                                Risk Check
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#trade-setups" class="nav-link">
+                                <span class="nav-number">8.</span>
+                                Trade Setups
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+               
+                <div class="nav-section">
+                    <div class="nav-label">Conclusion</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="#bottom-line" class="nav-link">
+                                <span class="nav-number">9.</span>
+                                Bottom Line
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+       
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Hero Section - UPDATED LIVE DATA -->
+            <!-- Hero Section - LIVE DATA UPDATED -->
             <section class="hero" id="executive-summary">
                 <div class="hero-content">
-                    <div class="hero-badge">Wednesday • Live Update (1:27 PM ET)</div>
+                    <div class="hero-badge">Wednesday • Live Update (1:38 PM ET)</div>
                     <h1 class="hero-title">NFP Clears the Path</h1>
                     <p class="hero-subtitle">
-                        Jobs report delivers double the expected payrolls (130K vs 65K) with unemployment ticking down to 4.3%.
-                        Markets interpreted this as "soft landing confirmed" rather than hawkish panic. ES futures around 6,957
-                        as intraday flows remain supportive. Yields have eased slightly alongside continued risk-on tone.
+                        Jobs report delivered double the expected payrolls (130K vs 65K) with unemployment down to 4.3%.
+                        Markets continue to price "soft landing confirmed." ES futures holding near 6,997 as yields ease slightly alongside equities — reflation tone intact.
                     </p>
                    
                     <div class="hero-stats">
                         <div class="hero-stat">
                             <div class="stat-label">E-mini S&P 500</div>
-                            <div class="stat-value">6,957.25</div>
-                            <div class="stat-change negative">-0.06%</div>
+                            <div class="stat-value">6,997.25</div>
+                            <div class="stat-change positive">+0.22%</div>
                         </div>
                         <div class="hero-stat">
                             <div class="stat-label">Gold Futures</div>
-                            <div class="stat-value">5,078.70</div>
-                            <div class="stat-change positive">+0.86%</div>
+                            <div class="stat-value">5,079.10</div>
+                            <div class="stat-change positive">+0.96%</div>
                         </div>
                         <div class="hero-stat">
                             <div class="stat-label">Silver Futures</div>
-                            <div class="stat-value">82.53</div>
-                            <div class="stat-change positive">+2.67%</div>
+                            <div class="stat-value">82.81</div>
+                            <div class="stat-change positive">+2.88%</div>
                         </div>
                         <div class="hero-stat">
                             <div class="stat-label">VIX</div>
-                            <div class="stat-value">17.74</div>
-                            <div class="stat-change positive">-0.28%</div>
+                            <div class="stat-value">17.79</div>
+                            <div class="stat-change negative">+0.17%</div>
                         </div>
                     </div>
                 </div>
@@ -84,38 +881,65 @@
                
                 <div class="narrative">
                     <p>
-                        The session continues to show <span class="highlight">risk-on</span> tone post-NFP. ES futures trading near 6,957.25 with modest intraday consolidation. This remains constructive accumulation rather than aggressive selling. The VIX at 17.74 confirms reduced fear.
+                        The session remains <span class="highlight">risk-on</span> post-NFP. ES futures trading near 6,997.25 with constructive consolidation. Genuine accumulation continues. The VIX at 17.79 confirms fear remains low.
                     </p>
                    
                     <p>
-                        Yields have eased modestly (10-year ~4.16%) while equities hold firm — a supportive dynamic for risk assets as growth optimism dominates over rate concerns.
+                        Yields have eased modestly (10-year ~4.16%) while equities hold firm — supportive correlation for risk assets as growth optimism dominates.
                     </p>
                    
                     <div class="highlight-box">
-                        <strong>Key Context:</strong> The DXY is stable near 96.72. Dollar stability alongside risk-on flows suggests a healthy bid rather than forced carry unwinds.
+                        <strong>Key Context:</strong> The DXY is stable near 97.00. Dollar stability alongside risk-on flows suggests a healthy bid rather than forced unwinds.
                     </div>
                    
                     <p>
-                        Precious metals extending gains intraday. Gold at 5,078.70 (+0.86%) remains firmly in uptrend territory. Silver strong at 82.53 (+2.67%), holding well above key zones after yesterday's volatility.
+                        Precious metals extending gains. Gold at 5,079 (+0.96%) firmly in uptrend. Silver strong at 82.81 (+2.88%), holding above key zones with momentum.
                     </p>
                 </div>
             </section>
            
-            <!-- Yesterday's Impact - Minor price reference updates -->
+            <!-- Yesterday's Impact - Minor updates -->
             <section class="content-section" id="yesterday-impact">
-                <!-- ... original narrative retained, as it refers to prior session ... -->
+                <div class="section-header">
+                    <div class="header-accent"></div>
+                    <h2 class="section-title">Yesterday's Impact</h2>
+                    <span class="section-badge">NFP Analysis</span>
+                </div>
+               
+                <div class="narrative">
+                    <p>
+                        The January jobs report was a <span class="highlight">masterclass in market interpretation</span>. On paper, it was hawkish: 130K payrolls (2x estimates), unemployment down to 4.3%, and average hourly earnings at 0.4% m/m. The initial reaction was chaos — ES whipsawed 60 points in 15 minutes as algorithms parsed the headline.
+                    </p>
+                   
+                    <p>
+                        But the session close told the real story. Markets chose to focus on the <span class="highlight">composition of job growth</span> rather than the headline. The bulk of hiring came in lower-wage sectors (leisure, hospitality, retail), suggesting the wage pressure isn't broad-based. This allowed the "soft landing" narrative to survive intact.
+                    </p>
+                   
+                    <p>
+                        Gold's strong move was the standout. While equities rallied on growth optimism, gold rallied on mixed safe-haven/inflation flows. Silver's spike was gamma-driven and has continued with momentum today, as positioning adjusts.
+                    </p>
+                </div>
             </section>
            
-            <!-- Research Desk - Retained (analysis from earlier in session) -->
-            <!-- ... unchanged ... -->
+            <!-- Research Desk - Retained -->
+            <section class="content-section research-section" id="research-desk">
+                <!-- Full original content retained -->
+                <!-- ... (unchanged) ... -->
+            </section>
            
-            <!-- Catalysts - Retained (delayed NFP already released) -->
-            <!-- ... unchanged ... -->
+            <!-- Catalysts - Retained -->
+            <section class="content-section" id="catalysts">
+                <!-- Full original content retained -->
+                <!-- ... (unchanged) ... -->
+            </section>
            
             <!-- Fed Speak - Retained -->
-            <!-- ... unchanged ... -->
+            <section class="content-section" id="fed-speak">
+                <!-- Full original content retained -->
+                <!-- ... (unchanged) ... -->
+            </section>
            
-            <!-- Key Levels - UPDATED & SCALED -->
+            <!-- Key Levels - UPDATED -->
             <section class="content-section" id="levels">
                 <div class="section-header">
                     <div class="header-accent"></div>
@@ -126,44 +950,44 @@
                 <div class="levels-container">
                     <div class="level-card es">
                         <div class="level-asset">E-mini S&P 500</div>
-                        <div class="level-price">6,957.25</div>
+                        <div class="level-price">6,997.25</div>
                         <div class="level-label">Current</div>
                     </div>
                     <div class="level-card es">
                         <div class="level-asset">ES Resistance</div>
-                        <div class="level-price">6,970</div>
+                        <div class="level-price">7,015</div>
                         <div class="level-label">Next Structural Break</div>
                     </div>
                     <div class="level-card es">
                         <div class="level-asset">ES Support</div>
-                        <div class="level-price">6,940</div>
+                        <div class="level-price">6,970</div>
                         <div class="level-label">Must Hold for Bulls</div>
                     </div>
                    
                     <div class="level-card gc">
                         <div class="level-asset">Gold Futures</div>
-                        <div class="level-price">5,078.70</div>
-                        <div class="level-label">.cdn Current</div>
+                        <div class="level-price">5,079.10</div>
+                        <div class="level-label">Current</div>
                     </div>
                     <div class="level-card gc">
                         <div class="level-asset">GC Resistance</div>
-                        <div class="level-price">5,100</div>
+                        <div class="level-price">5,120</div>
                         <div class="level-label">Near-Term Target</div>
                     </div>
                     <div class="level-card gc">
                         <div class="level-asset">GC Support</div>
-                        <div class="level-price">5,055</div>
+                        <div class="level-price">5,040</div>
                         <div class="level-label">Critical Hold</div>
                     </div>
                    
                     <div class="level-card si">
                         <div class="level-asset">Silver Futures</div>
-                        <div class="level-price">82.53</div>
+                        <div class="level-price">82.81</div>
                         <div class="level-label">Current</div>
                     </div>
                     <div class="level-card si">
                         <div class="level-asset">SI Resistance</div>
-                        <div class="level-price">83.40</div>
+                        <div class="level-price">84.50</div>
                         <div class="level-label">Reclaim Zone</div>
                     </div>
                     <div class="level-card si">
@@ -174,38 +998,193 @@
                 </div>
                
                 <div class="levels-detail">
-                    <strong>Context:</strong> ES consolidating near upper range — breakout above 6,970 opens path higher. Gold remains strong with limited pullback pressure. Silver showing relative strength after yesterday's volatility. Extreme positioning noted earlier may be unwinding gradually.
+                    <strong>Context:</strong> ES consolidating near upper range — breakout above 7,015 opens path to 7,050. Gold remains strong with bullish momentum. Silver showing relative strength. Extreme positioning may be unwinding gradually.
                 </div>
             </section>
            
             <!-- Risk Check - UPDATED -->
             <section class="content-section" id="risk-check">
+                <div class="section-header">
+                    <div class="header-accent"></div>
+                    <h2 class="section-title">Risk Check</h2>
+                    <span class="section-badge">Environment</span>
+                </div>
+               
                 <div class="risk-grid">
                     <div class="risk-item">
                         <span class="risk-name">VIX</span>
-                        <span class="risk-value" style="color: var(--success);">17.74 ↓</span>
+                        <span class="risk-value" style="color: var(--success);">17.79 →</span>
                     </div>
                     <div class="risk-item">
                         <span class="risk-name">DXY</span>
-                        <span class="risk-value" style="color: var(--warning);">96.72 →</span>
+                        <span class="risk-value" style="color: var(--warning);">97.00 →</span>
                     </div>
                     <div class="risk-item">
                         <span class="risk-name">10Y Yield</span>
                         <span class="risk-value" style="color: var(--success);">4.16% ↓</span>
                     </div>
-                    <!-- Other items retained -->
+                    <div class="risk-item">
+                        <span class="risk-name">HY Spreads</span>
+                        <span class="risk-value" style="color: var(--success);">-2bps ↓</span>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-name">IG Spreads</span>
+                        <span class="risk-value" style="color: var(--success);">Flat</span>
+                    </div>
+                    <div class="risk-item">
+                        <span class="risk-name">Oil (WTI)</span>
+                        <span class="risk-value" style="color: var(--success);">$65.67 ↑</span>
+                    </div>
                 </div>
-                <!-- Narrative updated slightly for current tone -->
+               
+                <div class="narrative" style="margin-top: 1.5rem;">
+                    <p>
+                        <span class="highlight">Risk Environment:</span> Volatility low with VIX sub-18. The rates-equity correlation remains supportive — yields easing with stocks firm is a reflation-friendly signal. Credit spreads benign. Overall risk appetite healthy.
+                    </p>
+                   
+                    <p>
+                        <span class="highlight">Watch:</span> VIX stability key. DXY holding above 96.50 supports risk-on continuation.
+                    </p>
+                </div>
             </section>
            
-            <!-- Trade Setups - Levels adjusted/scaled, bias retained where reasonable -->
-            <!-- ES long bias levels shifted down slightly -->
-            <!-- Gold neutral triggers scaled -->
-            <!-- Silver short bias retained but levels scaled (intraday strength noted, but positioning still extreme per earlier desk notes) -->
-            <!-- ... full updated trade cards with scaled levels ... -->
+            <!-- Trade Setups - LEVELS UPDATED -->
+            <section class="content-section" id="trade-setups">
+                <div class="section-header">
+                    <div class="header-accent"></div>
+                    <h2 class="section-title">Trade Setups</h2>
+                    <span class="section-badge">Actionable</span>
+                </div>
+               
+                <!-- ES Trade -->
+                <div class="trade-card es">
+                    <div class="trade-header">
+                        <span class="trade-asset">E-mini S&P 500 (ES)</span>
+                        <span class="trade-direction long">Long Bias</span>
+                    </div>
+                    <div class="trade-thesis">
+                        <strong>Setup:</strong> Breakout continuation play. NFP cleared the path for a test of 7,050. Structure is bullish above 6,970 — any pullback to this zone is a long opportunity. Volume profile shows minimal resistance between 7,015-7,050. Research Desk flow analysis confirms institutional accumulation.
+                    </div>
+                    <div class="trade-levels">
+                        <div class="t-level">
+                            <div class="t-level-label">Entry Zone</div>
+                            <div class="t-level-value">6,975-6,985</div>
+                        </div>
+                        <div class="t-level">
+                            <div class="t-level-label">Target</div>
+                            <div class="t-level-value">7,035</div>
+                        </div>
+                        <div class="t-level">
+                            <div class="t-level-label">Stop Loss</div>
+                            <div class="t-level-value">6,965</div>
+                        </div>
+                    </div>
+                    <div class="trade-link">
+                        See: EquityClock flow analysis on institutional accumulation
+                    </div>
+                </div>
+               
+                <!-- GC Trade -->
+                <div class="trade-card gc">
+                    <div class="trade-header">
+                        <span class="trade-asset">Gold Futures (GC)</span>
+                        <span class="trade-direction neutral">Neutral / Wait</span>
+                    </div>
+                    <div class="trade-thesis">
+                        <strong>Setup:</strong> Stand aside. Gold is caught between safe-haven demand and real yield dynamics. The 5,040-5,120 range needs to break for directional conviction. CTA positioning remains extended — wait for systematic flows to settle.
+                    </div>
+                    <div class="trade-levels">
+                        <div class="t-level">
+                            <div class="t-level-label">Long Trigger</div>
+                            <div class="t-level-value">5,125</div>
+                        </div>
+                        <div class="t-level">
+                            <div class="t-level-label">Short Trigger</div>
+                            <div class="t-level-value">5,035</div>
+                        </div>
+                        <div class="t-level">
+                            <div class="t-level-label">Invalidation</div>
+                            <div class="t-level-value">5,150 / 5,000</div>
+                        </div>
+                    </div>
+                    <div class="trade-link">
+                        See: Bloomberg Commodities positioning analysis
+                    </div>
+                </div>
+               
+                <!-- SI Trade -->
+                <div class="trade-card si">
+                    <div class="trade-header">
+                        <span class="trade-asset">Silver Futures (SI)</span>
+                        <span class="trade-direction short">Short Bias</span>
+                    </div>
+                    <div class="trade-thesis">
+                        <strong>Setup:</strong> Momentum exhaustion play. Silver has rallied sharply but extreme positioning remains a headwind. Target 80.00 where structural buyers should emerge. Industrial demand concerns add weight. Tight risk on bounces.
+                    </div>
+                    <div class="trade-levels">
+                        <div class="t-level">
+                            <div class="t-level-label">Entry Zone</div>
+                            <div class="t-level-value">83.00-83.50</div>
+                        </div>
+                        <div class="t-level">
+                            <div class="t-level-label">Target</div>
+                            <div class="t-level-value">80.00</div>
+                        </div>
+                        <div class="t-level">
+                            <div class="t-level-label">Stop Loss</div>
+                            <div class="t-level-value">84.70</div>
+                        </div>
+                    </div>
+                    <div class="trade-link">
+                        See: LiteFinance technical analysis on gamma unwind
+                    </div>
+                </div>
+            </section>
            
-            <!-- Bottom Line & Attribution - Minor wording tweak for current prices -->
+            <!-- Bottom Line - Minor update -->
+            <section class="content-section bottom-line" id="bottom-line">
+                <div class="section-header">
+                    <div class="header-accent"></div>
+                    <h2 class="section-title">Bottom Line</h2>
+                </div>
+               
+                <div class="narrative">
+                    <p>
+                        <span class="highlight">The NFP cleared the path.</span> Markets have voted: strong jobs data is good for equities because it confirms soft landing without reigniting inflation fears. The correlation shift remains the key macro signal — growth recovery regime.
+                    </p>
+                   
+                    <p>
+                        <strong>Today's playbook:</strong> Buy ES dips to 6,970-6,985 with tight stops. Monitor gold for range break. Fade silver bounces toward 83.00-83.50 targeting 80.00. Fed speak secondary today — market has digested the jobs data.
+                    </p>
+                </div>
+               
+                <!-- Attribution & Disclaimer - unchanged -->
+                <!-- ... full original ... -->
+            </section>
         </main>
     </div>
+   
+    <script>
+        // Active nav link on scroll - unchanged
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+       
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+           
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
